@@ -1,20 +1,41 @@
 package com.central.launcher
 
-import android.os.Bundle
+import android.content.Context
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import androidx.appcompat.app.AppCompatActivity
-import com.central.launcher.AppListAdapter
+import androidx.recyclerview.widget.RecyclerView
+
+
 
 
 class MainActivity : AppCompatActivity() {
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_main)
 
-        val recyclerView: RecyclerView = findViewById(R.id.recycler_view)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+    class AppListAdapter(private val context: Context, private val apps: List<AppInfo>) : RecyclerView.Adapter<AppListAdapter.ViewHolder>() {
 
-        val adapter = AppListAdapter(this)
-        recyclerView.adapter = adapter
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+            val view = LayoutInflater.from(context).inflate(R.layout.list_item, parent, false)
+            return ViewHolder(view)
+        }
+
+        override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+            val appInfo = apps[position]
+            holder.bind(appInfo)
+        }
+
+        override fun getItemCount(): Int {
+            return apps.size
+        }
+
+        class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+
+            fun bind(appInfo: AppInfo) {
+                // Bind the app information to the view here
+            }
+
+        }
+
     }
 }
